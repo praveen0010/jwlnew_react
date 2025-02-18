@@ -36,5 +36,6 @@
   animation: slideLeftToRight 1s ease-in-out forwards;
 }
 .bgcol {
-  background-color: #ffbb03;
+  /* background-color: #ffbb03; */
+  background-color: green;
 }
