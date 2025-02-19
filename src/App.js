@@ -9,7 +9,7 @@ import Footer from "./pages/Footer";
 function App() {
   return (
     <>
-      <div className=" bg-gray-400 overflow-auto container mx-auto h-screen ">
+      <div className=" bg-gray-400 overflow-auto container mx-auto h-screen  relative">
         <Navbar />
         <Routes>
           <Route path="/" element={<Hero />} />

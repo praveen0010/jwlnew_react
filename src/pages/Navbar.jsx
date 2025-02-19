@@ -4,18 +4,18 @@ import logo from "../Assets/images/logo.png";
 
 const Navbar = () => {
   return (
-    <div className="md:px-10 fixed top-0 left-0 w-full h-18 gradientbg p-3   flex justify-between  items-center">
+    <div className="md:px-10  h-18 gradientbg p-3 fixed top-0 left-0  w-full mx-auto  flex justify-between  items-center ">
       <div>
         <img src={logo} alt="logo" className="h-22 w-24  md:w-42 md:h-42" />
       </div>
-      <div className="flex justify-center items-center gap-2 bgvanmobile   rounded-lg p-3 md:px-5">
+      <div className="flex justify-center items-center gap-1 md:gap-2 bgvanmobile   rounded-lg p-2  md:px-5">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          class="size-6 text-white"
+          class="size-4 md:size-6 text-white"
         >
           <path
             strokeLinecap="round"
@@ -24,7 +24,9 @@ const Navbar = () => {
           />
         </svg>
 
-        <h1 className="md:font-semibold   text-white ">+91 9865208989</h1>
+        <h1 className="md:font-semibold  text-xs text-white ">
+          +91 9865208989
+        </h1>
       </div>
     </div>
   );

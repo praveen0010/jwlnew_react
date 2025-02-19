@@ -7,7 +7,7 @@ const Hero = () => {
     <div
       style={{ backgroundImage: `url(${herobg})` }}
       className=" 
-      pt-20 pb-0   md:h-full
+      pt-20 pb-0  
       w-full bg-cover bg-center flex-row flex 
       justify-around gap-3 p-3 flex-wrap "
     >
@@ -22,7 +22,7 @@ const Hero = () => {
           நம்பிக்கையன் அடையாளம்
         </h4>
         <hr className="w-full border-1 border-yellow-500" />
-        <h4 className="text-center text-white text-xl font-bold">
+        <h4 className="text-center text-white text-lg md:text-xl font-bold">
           CLICK HERE TO ENTER FOR MONTHLY PAY
         </h4>
         <div className="flex flex-col md:flex-row justify-between w-full p-3 rounded-sm  gap-2">
