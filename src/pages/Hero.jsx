@@ -7,7 +7,7 @@ const Hero = () => {
     <div
       style={{ backgroundImage: `url(${herobg})` }}
       className=" 
-      pt-12 md:pt-20 mt-12 pb-0  
+      pt-20 mt-12 pb-0  
       w-full  bg-center md:bg-cover bg-contain md:flex-row flex justify-around
        gap-3 p-3 flex-col    "
     >
