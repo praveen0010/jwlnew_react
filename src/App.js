@@ -1,16 +1,27 @@
 import "./App.css";
-import Home from "./pages/Home";
 import { Routes, Route } from "react-router-dom";
-import Plansform from "./pages/Plansform";
+//import Home from "./pages/Home";
+//import Plansform from "./pages/Plansform";
+import Navbar from "./pages/Navbar";
+import Hero from "./pages/Hero";
+import Footer from "./pages/Footer";
 
 function App() {
   return (
-    <div className="bg-purple-100 overflow-auto container mx-auto h-screen ">
-      <Routes>
-        <Route path="/" element={<Home />} />
+    <>
+      <div className=" bg-gray-400 overflow-auto container mx-auto h-screen ">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Hero />} />
+
+          {/* <Route path="/" element={<Home />} />
         <Route path="/:pageform" element={<Plansform />} />
-      </Routes>
-    </div>
+     */}
+        </Routes>
+
+        <Footer />
+      </div>
+    </>
   );
 }
 
