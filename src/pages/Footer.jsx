@@ -11,16 +11,16 @@ const Footer = () => {
     >
       <div className="flex flex-col   w-full  h-full lg:h-44 md:px-5">
         <div className=" p-5 flex-col sm:gap-2 md:gap-5 gap-2 md:flex-row flex w-full justify-between  ">
-          <div className=" shadow-lg shadow-gray-500 flex flex-col   rounded-lg  border-4 border-yellow-600 hover:transition-transform duration-100  hover:scale-105 w-full  md:w-1/3  break-words p-4">
+          <div className="  flex flex-col   rounded-lg  border-4 border-yellow-600 hover:transition-transform duration-100  hover:scale-105 w-full  md:w-1/3  break-words p-4">
             <h1 className="font-bold ">Address</h1>
             <p> Shop No 36,Muthurangam St,</p>
             <p>Erode,Tamil Nadu-638001</p>
           </div>
-          <div className=" shadow-lg shadow-gray-500 flex flex-col   rounded-lg  border-4 border-yellow-600 hover:transition-transform duration-100  hover:scale-105 w-full md:w-1/3  break-words p-4">
+          <div className="  flex flex-col   rounded-lg  border-4 border-yellow-600 hover:transition-transform duration-100  hover:scale-105 w-full md:w-1/3  break-words p-4">
             <h1 className="font-bold ">Phone</h1>
             <p>+91 98652 08989</p>
           </div>
-          <div className=" shadow-lg shadow-gray-500 flex flex-col   rounded-lg  border-4 border-yellow-600 hover:transition-transform duration-100  hover:scale-105 w-full md:w-1/3 break-words p-4">
+          <div className="  flex flex-col   rounded-lg  border-4 border-yellow-600 hover:transition-transform duration-100  hover:scale-105 w-full md:w-1/3 break-words p-4">
             <h1 className="font-bold ">Email</h1>
             <p>salemjewellery1996@gmail.com</p>
           </div>

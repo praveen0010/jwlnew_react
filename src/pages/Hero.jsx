@@ -7,25 +7,25 @@ const Hero = () => {
     <div
       style={{ backgroundImage: `url(${herobg})` }}
       className=" 
-      pt-20 pb-0  
-      w-full bg-cover bg-center flex-row flex 
-      justify-around gap-3 p-3 flex-wrap "
+      pt-20 mt-12 pb-0  
+      w-full bg-cover bg-center flex-row flex justify-around
+       gap-3 p-3 flex-wrap   "
     >
-      <div>
-        <img src={Herogirl} className="w-full h-full" alt="heroimg" />
+      <div className="order-2 sm:order-1">
+        <img src={Herogirl} className="w-full h-136" alt="heroimg" />
       </div>
-      <div className="flex flex-col items-center justify-center gap-5">
+      <div className="order-1 sm:order-2 flex flex-col justify-center items-center gap-7  py-7 sm:gap-5">
         <h1 className="text-center text-white text-5xl font-extrabold">
           சேலம் ஜுவல்லரி
         </h1>
         <h4 className="text-center text-white text-2xl">
-          நம்பிக்கையன் அடையாளம்
+          நம்பிக்கையின் அடையாளம்
         </h4>
         <hr className="w-full border-1 border-yellow-500" />
-        <h4 className="text-center text-white text-lg md:text-xl font-bold">
+        <h4 className="text-center text-white text-sm sm:text-xl  font-bold">
           CLICK HERE TO ENTER FOR MONTHLY PAY
         </h4>
-        <div className="flex flex-col md:flex-row justify-between w-full p-3 rounded-sm  gap-2">
+        <div className="flex flex-col md:flex-row justify-between w-full h-100vh my-auto sm:my-0 p-3 rounded-sm  gap-5 sm:gap-3">
           <button className="bggoldbtn px-7 p-2 font-semibold text-white rounded-md">
             GOLD COIN
           </button>
