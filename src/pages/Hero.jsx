@@ -7,14 +7,14 @@ const Hero = () => {
     <div
       style={{ backgroundImage: `url(${herobg})` }}
       className=" 
-      pt-20 mt-12 pb-0  
-      w-full bg-cover bg-center flex-row flex justify-around
-       gap-3 p-3 flex-wrap   "
+      pt-12 md:pt-20 mt-12 pb-0  
+      w-full  bg-center md:bg-cover bg-contain md:flex-row flex justify-around
+       gap-3 p-3 flex-col    "
     >
-      <div className="order-2 sm:order-1">
-        <img src={Herogirl} className="w-full h-136" alt="heroimg" />
+      <div className="order-2 md:order-1">
+        <img src={Herogirl} className="w-full md:h-full h-136" alt="heroimg" />
       </div>
-      <div className="order-1 sm:order-2 flex flex-col justify-center items-center gap-7  py-7 sm:gap-5">
+      <div className="order-1 md:order-2 flex flex-col justify-center items-center gap-7  py-7 md:gap-5">
         <h1 className="text-center text-white text-5xl font-extrabold">
           சேலம் ஜுவல்லரி
         </h1>
