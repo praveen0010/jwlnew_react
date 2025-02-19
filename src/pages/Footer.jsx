@@ -28,7 +28,7 @@ const Footer = () => {
         <div>
           <div>
             <p className="font-semibold text-gray-700 text-sm md:text-lg text-center">
-              © Copy Rights to Salem Jwellery
+              © Copy Rights to Salem Jewellery
             </p>
           </div>
         </div>
