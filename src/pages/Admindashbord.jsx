@@ -17,10 +17,11 @@ const Admindashbord = () => {
 
     // setTimeout(() => {
     //   const fetchdata = Array.from({ length: 25 }, (_, i) => ({
-    //     id: i + 1,
+    //     amount: i + 1,
     //     name: `User ${i + 1}`,
     //     email: `user${i + 1}@example.com`,
-    //     age: 20 + (i % 10),
+    //     phone_number: 1234567890,
+    //     select_type: "Gold",
     //   }));
     //   setdata(fetchdata);
     // }, 2000);
