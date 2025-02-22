@@ -46,7 +46,7 @@ const Plansform = () => {
     email: "",
     phone_number: "",
     select_type: "",
-    //Scheme: "",
+    Scheme: "",
   });
   const [formData, setFormData] = useState({
     // "name": "test3",
@@ -59,7 +59,7 @@ const Plansform = () => {
     email: "",
     phone_number: "",
     select_type: pageheading,
-    //Scheme: "",
+    Scheme: "",
   });
 
   // {
@@ -127,7 +127,7 @@ const Plansform = () => {
   async function Saveuser() {
     try {
       const response = await axios.post(
-        "https://asa-h5hb.onrender.com/client/clients",
+        "https://asa-h5hb.onrender.com/client/client",
         JSON.stringify(formData),
         {
           headers: {
