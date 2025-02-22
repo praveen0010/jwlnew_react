@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Plansform from "./pages/Plansform";
 import Navbar from "./pages/Navbar";
 import Hero from "./pages/Hero";
-import Footer from "./pages/Footer";
+//import Footer from "./pages/Footer";
 import Adminform from "./pages/Adminform";
 import Admindashbord from "./pages/Admindashbord";
 
@@ -22,8 +22,6 @@ function App() {
           <Route path="/Admin" element={<Adminform />} />
           <Route path="/Admindashbord" element={<Admindashbord />} />
         </Routes>
-
-        
       </div>
     </>
   );
