@@ -7,6 +7,7 @@ import Hero from "./pages/Hero";
 //import Footer from "./pages/Footer";
 import Adminform from "./pages/Adminform";
 import Admindashbord from "./pages/Admindashbord";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   return (
@@ -15,12 +16,18 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Hero />} />
+          <Route path="/Home" element={<Hero />} />
 
           {/* <Route path="/" element={<Home />} />
            */}
-          <Route path="/:pageform" element={<Plansform />} />
+          <Route path="/Home/Silverform" element={<Plansform />} />
+          <Route path="/Home/Goldform" element={<Plansform />} />
+          <Route path="/Home/Chitform" element={<Plansform />} />
+
           <Route path="/Admin" element={<Adminform />} />
           <Route path="/Admindashboard" element={<Admindashbord />} />
+
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>
     </>

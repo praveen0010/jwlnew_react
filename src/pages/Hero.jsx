@@ -35,19 +35,19 @@ const Hero = () => {
             </h4>
             <div className="flex flex-col md:flex-row justify-between  w-full  p-3  rounded-sm gap-5 ">
               <Link
-                to="/Goldform"
+                to="/Home/Goldform"
                 className="bggoldbtn px-8 p-2 font-semibold text-black rounded-md text-center "
               >
                 GOLD COIN
               </Link>
               <Link
-                to="/Silverform"
+                to="/Home/Silverform"
                 className="bgsilverbtn px-8 p-2 font-semibold text-black rounded-md text-center"
               >
                 SILVER
               </Link>
               <Link
-                to="/Chitform "
+                to="/Home/Chitform "
                 className="bgchitbtn px-8 p-2 font-semibold text-white rounded-md text-center"
               >
                 CHIT FUND

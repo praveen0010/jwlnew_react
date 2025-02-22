@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 const Plansform = () => {
   const navigate = useNavigate();
   let { pageform } = useParams();
-  const goldplan = ["200g", "500g", "1000g"];
-  const silverplan = ["500g", "1000g", "1kg"];
+  const goldplan = ["1gm", "2gms", "4gms", "8gms"];
+  const silverplan = ["1gm", "2gms", "5gms", "10gms"];
   const chitplan = ["10,00000", "20,00000", "50,00000"];
 
   const btnclass =
