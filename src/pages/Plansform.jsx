@@ -3,8 +3,10 @@ import { useParams } from "react-router-dom";
 import herobg from "../Assets/images/herobg.png";
 import "./Planform.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Plansform = () => {
+  const navigate = useNavigate();
   let { pageform } = useParams();
   const goldplan = ["200g", "500g", "1000g"];
   const silverplan = ["500g", "1000g", "1kg"];
@@ -144,6 +146,7 @@ const Plansform = () => {
         select_type: "",
         Scheme: "",
       });
+      navigate("/");
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("Failed to submit form. Please try again.");
