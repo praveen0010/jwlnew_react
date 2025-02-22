@@ -7,7 +7,7 @@ const Admindashbord = () => {
   const [data, setdata] = useState([]);
   useEffect(() => {
     axios
-      .get("https://asa-cagy.onrender.com/client/clients")
+      .get("/client/clients")
       .then((response) => {
         setdata(response.data);
       })
@@ -34,58 +34,57 @@ const Admindashbord = () => {
     <div
       className="
           w-full  
-           flex    h-full pt-20 md:pt-32"
+           flex    h-full pt-20 md:pt-32 relative"
     >
-      <div className=" container mx-auto overflow-auto h-full border rounded-lg shadow-md">
-        <div className="overflow-auto md:min-h-[500px] min-h-[200px]">
-          {/* Table with Fixed Header */}
-          <table className="w-full border-collapse">
-            <thead className="bggoldbtn text-white sticky top-0">
-              <tr>
-                <th className="p-3 text-left">No</th>
-                <th className="p-3 text-left">Name</th>
-                <th className="p-3 text-left">Mobile</th>
-                <th className="p-3 text-left">Email</th>
-                <th className="p-3 text-left">Amount</th>
-                <th className="p-3 text-left">Type</th>
-              </tr>
-            </thead>
+      <div className=" w-full mx-auto overflow-auto  border rounded-lg shadow-md relative ">
+        {/* Table with Fixed Header */}
+        <table className="w-full border-collapse h-full">
+          <thead className="bggoldbtn text-white sticky top-0">
+            <tr>
+              <th className="p-3 text-left">No</th>
+              <th className="p-3 text-left">Name</th>
+              <th className="p-3 text-left">Mobile</th>
+              <th className="p-3 text-left">Email</th>
+              <th className="p-3 text-left">Amount</th>
+              <th className="p-3 text-left">Type</th>
+            </tr>
+          </thead>
 
-            {/* Scrollable Table Body with Min Height */}
-            <tbody className=" overflow-auto  md:min-h-[500px] max-h-[150px]">
-              {data.length > 0 ? (
-                data.map((user, index) => (
-                  <tr key={index} className="even:bg-gray-200">
-                    <td className="p-3 text-left">{index + 1}</td>
-                    <td className="p-3 text-left">{user.name}</td>
-                    <td className="p-3 text-left">{user.phone_number}</td>
-                    <td className="p-3 text-left">{user.email}</td>
-                    <td className="p-3 text-left">{user.amount}</td>
-                    <td className="p-3 text-left">{user.select_type}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td
-                    colSpan="6"
-                    className="border p-4 text-center text-gray-500 h-[200px]"
-                  >
-                    No data available
-                  </td>
+          {/* Scrollable Table Body with Min Height */}
+          <tbody className=" overflow-auto ">
+            {data.length > 0 ? (
+              data.map((user, index) => (
+                <tr key={index} className="even:bg-gray-200">
+                  <td className="p-3 text-left">{index + 1}</td>
+                  <td className="p-3 text-left">{user.name}</td>
+                  <td className="p-3 text-left">{user.phone_number}</td>
+                  <td className="p-3 text-left">{user.email}</td>
+                  <td className="p-3 text-left">{user.amount}</td>
+                  <td className="p-3 text-left">{user.select_type}</td>
                 </tr>
-              )}
-            </tbody>
-
-            {/* Table Footer (Fixed) */}
-            <tfoot className="bggoldbtn sticky bottom-0">
+              ))
+            ) : (
               <tr>
-                <td colSpan="6" className="border p-2 text-left font-semibold">
-                  Total Users: {data.length}
+                <td
+                  colSpan="6"
+                  className="border p-4 text-center text-gray-500 h-[200px]"
+                >
+                  No data available
                 </td>
               </tr>
-            </tfoot>
-          </table>
-        </div>
+            )}
+          </tbody>
+
+          {/* Table Footer (Fixed) */}
+
+          <tfoot className="bggoldbtn sticky bottom-0">
+            <tr>
+              <td colSpan="6" className="border p-2 text-left font-semibold">
+                Total Users: {data.length}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
       </div>
     </div>
   );

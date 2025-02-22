@@ -16,7 +16,7 @@ const Navbar = () => {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            class="size-4 md:size-6 text-white"
+            className="size-4 md:size-6 text-white"
           >
             <path
               strokeLinecap="round"

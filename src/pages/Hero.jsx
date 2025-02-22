@@ -12,8 +12,8 @@ const Hero = () => {
           style={{ backgroundImage: `url(${herobg})` }}
           className=" 
        pb-0  bg-gray-500
-      w-full  bg-center md:bg-cover bg-contain md:flex-row flex lg:justify-normal justify-center
-         flex-col    gap-8 md:gap-0 p-3 pt-12"
+      w-full  bg-center md:bg-cover bg-contain md:flex-row flex lg:justify-normal 
+         flex-col     md:gap-0 p-3 "
         >
           <div className="order-2 md:order-1 ">
             <img
@@ -22,7 +22,7 @@ const Hero = () => {
               alt="heroimg"
             />
           </div>
-          <div className="order-1 md:order-2 flex flex-col justify-center items-center     md:h-auto gap-10 md:pr-10   lg:pl-16">
+          <div className="  order-1 md:order-2 flex flex-col  md:h-auto md:justify-center  h-screen pt-7 gap-10">
             <h1 className="text-center text-white text-5xl font-extrabold">
               சேலம் ஜுவல்லரி
             </h1>
@@ -33,7 +33,7 @@ const Hero = () => {
             <h4 className="text-center text-white text-sm sm:text-xl  font-bold">
               CLICK HERE TO ENTER FOR MONTHLY PAY
             </h4>
-            <div className="flex flex-col md:flex-row justify-between w-full h-100vh my-auto sm:my-0 p-3 rounded-sm  gap-5 sm:gap-3">
+            <div className="flex flex-col md:flex-row justify-between  w-full  p-3  rounded-sm gap-5 ">
               <Link
                 to="/Goldform"
                 className="bggoldbtn px-8 p-2 font-semibold text-black rounded-md text-center "

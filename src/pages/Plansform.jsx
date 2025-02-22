@@ -127,7 +127,7 @@ const Plansform = () => {
   async function Saveuser() {
     try {
       const response = await axios.post(
-        "https://asa-cagy.onrender.com/client/client",
+        "/client/client",
         JSON.stringify(formData),
         {
           headers: {

@@ -20,7 +20,7 @@ function App() {
            */}
           <Route path="/:pageform" element={<Plansform />} />
           <Route path="/Admin" element={<Adminform />} />
-          <Route path="/Admindashbord" element={<Admindashbord />} />
+          <Route path="/Admindashboard" element={<Admindashbord />} />
         </Routes>
       </div>
     </>
