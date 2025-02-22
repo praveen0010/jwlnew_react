@@ -7,7 +7,7 @@ const Admindashbord = () => {
   const [data, setdata] = useState([]);
   useEffect(() => {
     axios
-      .get("/client/clients")
+      .get("https://asa-h5hb.onrender.com/client/clients")
       .then((response) => {
         setdata(response.data);
       })
