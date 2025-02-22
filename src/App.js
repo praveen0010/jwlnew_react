@@ -28,9 +28,9 @@ function App() {
 
           {/* <Route path="/" element={<Home />} />
            */}
-          <Route path="/Home/Silverform" element={<Plansform />} />
-          <Route path="/Home/Goldform" element={<Plansform />} />
-          <Route path="/Home/Chitform" element={<Plansform />} />
+          <Route path="/Home/:pageform" element={<Plansform />} />
+          <Route path="/Home/:pageform" element={<Plansform />} />
+          <Route path="/Home/:pageform" element={<Plansform />} />
 
           <Route path="/Admin" element={<Adminform onlogin={handellogin} />} />
           <Route
