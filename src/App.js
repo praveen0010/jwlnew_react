@@ -25,12 +25,36 @@ function App() {
         <Routes>
           <Route path="/" element={<Hero />} />
           <Route path="/Home" element={<Hero />} />
-
-          {/* <Route path="/" element={<Home />} />
-           */}
-          <Route path="/Home/:pageform" element={<Plansform />} />
-          <Route path="/Home/:pageform" element={<Plansform />} />
-          <Route path="/Home/:pageform" element={<Plansform />} />
+          <Route
+            path="/Home/Goldform"
+            element={
+              <Plansform
+                planlist={["1gm", "2gms", "4gms", "8gms"]}
+                pageheading="Gold Plan"
+                btnclass="proceedtopaybtngold"
+              />
+            }
+          />
+          <Route
+            path="/Home/Silverform"
+            element={
+              <Plansform
+                planlist={["1gm", "2gms", "5gms", "10gms"]}
+                pageheading="Silver Plan"
+                btnclass="proceedtopaybtnsilver"
+              />
+            }
+          />
+          <Route
+            path="/Home/Chitform"
+            element={
+              <Plansform
+                planlist={["10,00000", "20,00000", "50,00000"]}
+                pageheading="Chit Plan"
+                btnclass="proceedtopaybtnchit"
+              />
+            }
+          />
 
           <Route path="/Admin" element={<Adminform onlogin={handellogin} />} />
           <Route

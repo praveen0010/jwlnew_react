@@ -129,10 +129,14 @@ const Adminform = ({ onlogin }) => {
 
           <div className="flex flex-col">
             <button
-              className={`cursor-pointer bg-blue-600
+              className={`cursor-pointer 
              mb-3 text-center  p-3  rounded text-white font-bold`}
               type="submit"
               onClick={handelsubmit}
+              style={{
+                background:
+                  "linear-gradient(90deg, #006537 0%, #01a056 50.5%, #006e39 100%)",
+              }}
             >
               Login
             </button>

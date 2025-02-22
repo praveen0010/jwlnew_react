@@ -1,45 +1,11 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import herobg from "../Assets/images/herobg.png";
 import "./Planform.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
-const Plansform = () => {
+const Plansform = ({ planlist, pageheading, btnclass }) => {
   const navigate = useNavigate();
-  let { pageform } = useParams();
-  console.log(pageform);
-  const goldplan = ["1gm", "2gms", "4gms", "8gms"];
-  const silverplan = ["1gm", "2gms", "5gms", "10gms"];
-  const chitplan = ["10,00000", "20,00000", "50,00000"];
-
-  const btnclass =
-    pageform === "Goldform"
-      ? "proceedtopaybtngold"
-      : pageform === "Silverform"
-      ? "proceedtopaybtnsilver"
-      : pageform === "Chitform"
-      ? "proceedtopaybtnchit"
-      : "proceedtopaybtngold";
-
-  const pageheading =
-    pageform === "Goldform"
-      ? "Gold Plan"
-      : pageform === "Silverform"
-      ? "Silver Plan"
-      : pageform === "Chitform"
-      ? "Chit Plan"
-      : "Gold Plan";
-
-  const planlist =
-    pageform === "Goldform"
-      ? goldplan
-      : pageform === "Silverform"
-      ? silverplan
-      : pageform === "Chitform"
-      ? chitplan
-      : goldplan;
-
   const [error, seterror] = useState({
     _id: "",
     name: "",
