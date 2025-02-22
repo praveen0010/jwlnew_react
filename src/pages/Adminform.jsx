@@ -3,7 +3,7 @@ import herobg from "../Assets/images/herobg.png";
 import "./Planform.css";
 import { useNavigate } from "react-router-dom";
 
-const Adminform = () => {
+const Adminform = ({ onlogin }) => {
   const navigate = useNavigate();
   const [error, seterror] = useState({
     name: "",
@@ -44,12 +44,18 @@ const Adminform = () => {
       }));
     }
     if (aller === "") {
-      navigate("/Admindashbord");
-      Saveuser();
+      const success = onlogin(formData.name, formData.password);
+      if (success) {
+        navigate("/Admindashboard");
+      } else {
+        seterror((preverr) => ({
+          ...preverr,
+          ["name"]: "Invalid Username",
+          ["password"]: "Invalid Password",
+        }));
+      }
     }
   }
-
-  function Saveuser() {}
   const handelchange = (e) => {
     const { name, value } = e.target;
     setFormData((prevdata) => ({
