@@ -54,7 +54,7 @@ const Footer = () => {
             alt="twitter"
           />
           <img
-            className="h-6 w-6 md:h-11 md:w-11"
+            className="h-6 w-6 md:h-10 md:w-10"
             src={twitter}
             alt="twitter"
           />

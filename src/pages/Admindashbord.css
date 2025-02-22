@@ -1,0 +1,27 @@
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+.bggoldbtn {
+  background: linear-gradient(90deg, #b28800 0%, #d9a500 52.5%, #ab8200 100%);
+}
+.bgsilverbtn {
+  background: linear-gradient(90deg, #838383 0%, #d6d6d6 50%, #818181 100%);
+}
+.bgchitbtn {
+  background: linear-gradient(90deg, #006537 0%, #01a056 50.5%, #006e39 100%);
+}
+
