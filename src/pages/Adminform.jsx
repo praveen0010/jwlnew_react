@@ -48,11 +48,10 @@ const Adminform = ({ onlogin }) => {
       if (success) {
         navigate("/Admindashboard");
       } else {
-        seterror((preverr) => ({
-          ...preverr,
-          ["name"]: "Invalid Username",
-          ["password"]: "Invalid Password",
-        }));
+        seterror({
+          name: "Invalid Username",
+          password: "Invalid Password",
+        });
       }
     }
   }
