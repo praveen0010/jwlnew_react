@@ -243,7 +243,6 @@ const Plansform = ({ planlist, pageheading, btnclass }) => {
               >
                 Full Name <span className="text-red-600 ">*</span>
               </label>
-              <p>{saveres}</p>
               <input
                 autoComplete="off"
                 className=" bg-transparent  rounded-sm p-2 w-full  outline-none focus:border-2 focus:border-black focus:rounded-md   border-b-2 border-black  "
@@ -336,6 +335,8 @@ const Plansform = ({ planlist, pageheading, btnclass }) => {
                 <p className="text-red-600 text-xs">{error.schemes}</p>
               )}
             </div>
+
+            <p className="text-center text-red-600">{saveres}</p>
             <div className="flex flex-col">
               <button
                 className={`${btnclass}      cursor-pointer
