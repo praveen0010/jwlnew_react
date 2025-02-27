@@ -168,7 +168,7 @@ const Plansform = ({ planlist, pageheading, btnclass }) => {
 
       const response = await axios.post(
         //"https://asa-main.onrender.com/client/client",
-        "http://192.168.1.33:5001/client/client",
+        `${process.env.REACT_APP_BASE_URL}/client/client`,
         JSON.stringify(formData),
         {
           headers: {
