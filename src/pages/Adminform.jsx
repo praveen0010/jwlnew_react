@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import herobg from "../Assets/images/herobg.png";
 import "./Planform.css";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const Adminform = ({ onlogin }) => {
-  const navigate = useNavigate();
+const Adminform = ({ onlogin, loginerr }) => {
   const [error, seterror] = useState({
     name: "",
     password: "",
@@ -44,16 +43,12 @@ const Adminform = ({ onlogin }) => {
       }));
     }
     if (aller === "") {
-      const success = onlogin(formData.name, formData.password);
-      if (success) {
-        navigate("/Admindashboard");
-      } else {
-        seterror({
-          name: "Invalid Username",
-          password: "Invalid Password",
-        });
-      }
+      checkadmin();
     }
+  }
+
+  async function checkadmin() {
+    onlogin(formData.name, formData.password);
   }
   const handelchange = (e) => {
     const { name, value } = e.target;
@@ -110,7 +105,10 @@ const Adminform = ({ onlogin }) => {
           </div>
 
           <div className="mb-3 ">
-            <label htmlFor="email" className="text-black font-semibold block">
+            <label
+              htmlFor="password"
+              className="text-black font-semibold block"
+            >
               Password
             </label>
             <input
@@ -126,6 +124,9 @@ const Adminform = ({ onlogin }) => {
               <p className="text-red-600 text-xs">{error.password}</p>
             )}
           </div>
+          {loginerr && (
+            <p className="text-red-600 text-xs text-center p-3">{loginerr}</p>
+          )}
 
           <div className="flex flex-col">
             <button
@@ -141,6 +142,12 @@ const Adminform = ({ onlogin }) => {
               Login
             </button>
           </div>
+
+          <Link to={"/Resetpassword"}>
+            <p className="cursor-pointer text-right text-blue-700">
+              Reset Password
+            </p>
+          </Link>
         </form>
       </div>
     </div>
