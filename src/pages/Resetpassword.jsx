@@ -27,10 +27,9 @@ const Resetpassword = () => {
           }
         );
 
-        //        const data = await response.json();
-        setMessage(response?.message);
-
-        if (response.ok) {
+        setMessage(response?.data?.message);
+        console.log(response);
+        if (response.status === 200) {
           setTimeout(() => navigate("/Admin"), 2000); // Redirect to login after 2s
         }
       } else {
@@ -125,7 +124,11 @@ const Resetpassword = () => {
           <div className="flex flex-col">
             <button
               className="cursor-pointer
-             mb-3 text-center  p-3  rounded text-white bg-blue-600 font-bold"
+             mb-3 text-center  p-3  rounded text-white  font-bold"
+              style={{
+                background:
+                  "linear-gradient(90deg, #006537 0%, #01a056 50.5%, #006e39 100%)",
+              }}
               type="submit"
               onClick={handleSubmit}
             >
