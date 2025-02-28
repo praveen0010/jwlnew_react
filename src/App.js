@@ -40,7 +40,7 @@ function App() {
   };
   return (
     <>
-      <div className="  overflow-auto  mx-auto h-screen  relative px-5">
+      <div className="  overflow-auto  mx-auto h-screen  relative ">
         <Navbar />
         <Routes>
           <Route path="/" element={<Hero />} />
