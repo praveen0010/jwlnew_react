@@ -1,13 +1,20 @@
 import React from "react";
 import "./Navbar.css";
 import logo from "../Assets/images/logo.png";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
     <div className="fixed w-full  top-0  right-0">
       <div className="md:px-10  h-22  md:h-32 gradientbg p-3  mx-auto flex justify-between  items-center ">
         <div>
-          <img src={logo} alt="logo" className="h-22 w-24  md:w-44 md:h-full" />
+          <Link to={"/"}>
+            <img
+              src={logo}
+              alt="logo"
+              className="h-22 w-24  md:w-44 md:h-full"
+            />
+          </Link>
         </div>
         <div className="flex justify-center items-center gap-1 md:gap-2 bgvanmobile   rounded-lg p-2  md:px-5">
           <svg
