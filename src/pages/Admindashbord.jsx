@@ -13,7 +13,6 @@ const Admindashbord = ({ pricedata, setpricedata }) => {
   const [isloading, setisloading] = useState(false);
   const [isreport, setisreport] = useState(true);
   const [isfilter, setisfilter] = useState(false);
-  const [isload, setisload] = useState(false);
   const [savemsg, setsavemsg] = useState("");
   const [filterdate, setfilterdate] = useState({
     fromdate: moment().format("YYYY-MM-DD"),
@@ -26,43 +25,46 @@ const Admindashbord = ({ pricedata, setpricedata }) => {
     chittu: "",
   });
 
+  const [shouldFetch, setShouldFetch] = useState(false); // Triggers API fetch
   useEffect(() => {
-    setisloading(true);
-    axios
-      // .get(
-      //   `https://asa-main.onrender.com/client/clientsort?page=${page}&limit=10&sortBy=name&sortOrder=asc`
-      // )
-      .get(`${process.env.REACT_APP_BASE_URL}/client/getclientfilters`, {
-        params: {
-          fromDate: filterdate.fromdate.split("-").reverse().join("-"),
-          toDate: filterdate.todate.split("-").reverse().join("-"),
-        },
-      })
-      .then((response) => {
-        setisloading(false);
-        setdata(response.data);
-      })
-      .catch((error) => {
-        setisloading(false);
-        console.error("Error fetching data:", error);
-      });
+    if (!shouldFetch) return; // Prevents API call unless shouldFetch is true
 
-    // setTimeout(() => {
-    //   setisloading(true);
-    //   const fetchdata = Array.from({ length: 10 }, (_, i) => ({
-    //     amount: i + 1,
-    //     name: `User ${i + 1}`,
-    //     email: `user${i + 1}@example.com`,
-    //     phone_number: 1234567890,
-    //     select_type: "Gold",
-    //   }));
-    //   setisloading(false);
-    //   setdata(fetchdata);
-    // }, 2000);
-    return () => {
-      setdata([]);
+    const fetchData = async () => {
+      setisloading(true);
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/client/getclientfilters`,
+          {
+            params: {
+              fromDate: filterdate.fromdate.split("-").reverse().join("-"),
+              toDate: filterdate.todate.split("-").reverse().join("-"),
+            },
+          }
+        );
+        setdata(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setisloading(false);
+        setShouldFetch(false); // Reset fetch trigger AFTER API call
+      }
     };
-  }, [isload]);
+
+    fetchData();
+  }, [shouldFetch, filterdate.fromdate, filterdate.todate]); // ✅ Include filterdate properties
+
+  function handelfilterresponse(from) {
+    if (from === "Clear") {
+      setisfilter(false);
+      setfilterdate({ fromdate: "", todate: "" });
+      setShouldFetch(true);
+    } else if (from === "Ok") {
+      setisfilter(false);
+      setShouldFetch(true);
+    } else if (from === "Exit") {
+      setisfilter(false);
+    }
+  }
 
   function handeldownload() {
     if (data.length > 0) {
@@ -192,43 +194,6 @@ const Admindashbord = ({ pricedata, setpricedata }) => {
     setisfilter(!isfilter);
   }
 
-  // function loadfilterdata() {
-  //   console.log(filterdate.fromdate);
-  //   console.log(filterdate.fromdate.split("-").reverse().join("-"));
-  //   setisloading(true);
-  //   axios
-  //     .get(
-  //       `${process.env.REACT_APP_BASE_URL}/client/getclientfilters`,
-  //       {
-  //         params: {
-  //           fromDate: filterdate.fromdate.split("-").reverse().join("-"),
-  //           toDate: filterdate.todate.split("-").reverse().join("-"),
-  //         },
-  //       }
-  //       //for only the filter
-  //     )
-  //     .then((response) => {
-  //       setisloading(false);
-  //       setdata(response.data);
-  //       console.log(response.data, "filterdata");
-  //     })
-  //     .catch((error) => {
-  //       setisloading(false);
-  //       console.error("Error fetching data:", error);
-  //     });
-  //}
-  function handelfilterresponse(from) {
-    if (from === "Clear") {
-      setisfilter(false);
-      setfilterdate({ fromdate: "", todate: "" });
-      setisload(!isload);
-    } else if (from === "Ok") {
-      setisfilter(false);
-      setisload(!isload);
-    } else if (from === "Exit") {
-      setisfilter(false);
-    }
-  }
   return (
     <>
       <div
