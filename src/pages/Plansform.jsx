@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import herobg from "../Assets/images/herobg.png";
 import "./Planform.css";
 import axios from "axios";
 
 const Plansform = ({ planlist, pageheading, btnclass }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [paymentstatus, setpaymentstatus] = useState("Loading...");
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
+  const [paymentstatus, setpaymentstatus] = useState("");
+
   const [saveres, setsaveres] = useState("");
+  const [pricedet, setpricedet] = useState({
+    golden: "",
+    silver: "",
+    chittu: "",
+  });
+
   const [error, seterror] = useState({
     _id: "",
     name: "",
@@ -30,6 +37,31 @@ const Plansform = ({ planlist, pageheading, btnclass }) => {
     paymentId: "",
     paymentStatus: "",
   });
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/prices/getPrices`)
+      .then((response) => {
+        
+        const price = {
+          chittu: response?.data?.[0]?.chittu,
+          golden: response?.data?.[0]?.golden,
+          silver: response?.data?.[0]?.silver,
+        };
+        setpricedet(price);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+    return () => {
+      setpricedet({});
+    };
+  }, []);
+  const toggleAlert = () => {
+    setIsVisible(!isVisible);
+    setTimeout(() => {
+      navigate("/");
+    }, 500);
+  };
 
   function validate_data(name, value) {
     let error = "";
@@ -67,12 +99,7 @@ const Plansform = ({ planlist, pageheading, btnclass }) => {
     }
     return error;
   }
-  const toggleAlert = () => {
-    setIsVisible(!isVisible);
-    setTimeout(() => {
-      navigate("/");
-    }, 500);
-  };
+
   function handelsubmit(e) {
     e.preventDefault();
     var aller = "";
@@ -92,13 +119,13 @@ const Plansform = ({ planlist, pageheading, btnclass }) => {
     try {
       if (formData.select_type === "Gold Plan") {
         const gram = formData.schemes.split("g");
-        formData.amount = gram?.[0] * 8738;
+        formData.amount = gram?.[0] * parseFloat(pricedet?.golden);
       } else if (formData.select_type === "Silver Plan") {
         const gram = formData.schemes.split("g");
-        formData.amount = gram?.[0] * 106;
+        formData.amount = gram?.[0] * parseFloat(pricedet?.silver);
       } else if (formData.select_type === "Chit Plan") {
         const gram = formData.schemes.split("0,0");
-        formData.amount = gram?.[0] * 10000;
+        formData.amount = gram?.[0] * parseFloat(pricedet?.chittu);
       }
       if (!formData.amount) {
         saveres("Invalid Amount");
@@ -117,8 +144,9 @@ const Plansform = ({ planlist, pageheading, btnclass }) => {
         handler: async function (response) {
           const razorpay_payment_id = response.razorpay_payment_id;
           if (razorpay_payment_id) {
+            setIsVisible(true);
             const paymentDetails = await verifyPayment(razorpay_payment_id);
-            console.log(paymentDetails);
+            
             if (paymentDetails) {
               savetodb(razorpay_payment_id, paymentDetails);
             }
@@ -137,15 +165,14 @@ const Plansform = ({ planlist, pageheading, btnclass }) => {
       var rzp1 = new window.Razorpay(options);
       rzp1.open();
     } catch (error) {
-      setIsVisible(!isVisible);
-      setpaymentstatus(error.message);
+      setIsVisible(false);
       console.error("Error submitting form:", error);
     }
   }
 
   const verifyPayment = async (razorpay_payment_id) => {
     try {
-      console.log(razorpay_payment_id);
+      setIsVisible(true);
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/payment/getPaymentDetails`,
         {
@@ -156,13 +183,13 @@ const Plansform = ({ planlist, pageheading, btnclass }) => {
         return response?.data?.payment?.status;
       }
     } catch (error) {
-      setIsVisible(!isVisible);
-      setpaymentstatus(error.message);
+      setIsVisible(false);
       console.error("Payment verification error:", error);
     }
   };
   const savetodb = async (paymentid, paymentstatus) => {
     try {
+      setIsVisible(true);
       formData.paymentId = paymentid;
       formData.paymentStatus = paymentstatus;
 
@@ -176,14 +203,14 @@ const Plansform = ({ planlist, pageheading, btnclass }) => {
           },
         }
       );
-      console.log("res", response);
-      setIsVisible(!isVisible);
+
       if (response.status === 200) {
         setpaymentstatus("Payment Succefull");
       } else {
         setpaymentstatus("Payment Failed");
       }
     } catch (error) {
+      setIsVisible(false);
       setsaveres(error.message);
     }
   };
@@ -203,17 +230,21 @@ const Plansform = ({ planlist, pageheading, btnclass }) => {
     <>
       {isVisible && (
         <div className="alert-overlay z-20">
-          <div className="alert-box flex  items-center justify-center flex-col gap-10">
-            <h2 className="font-semibold text-xl text-black">
-              {paymentstatus}
-            </h2>
-            <button
-              className="bg-green-500  text-white px-6 py-2 rounded-md font-semibold"
-              onClick={toggleAlert}
-            >
-              Close
-            </button>
-          </div>
+          {paymentstatus !== "" ? (
+            <div className="alert-box flex  items-center justify-center flex-col gap-10">
+              <h2 className="font-semibold text-xl text-black">
+                {paymentstatus}
+              </h2>
+              <button
+                className="bg-green-500  text-white px-6 py-2 rounded-md font-semibold"
+                onClick={toggleAlert}
+              >
+                Close
+              </button>
+            </div>
+          ) : (
+            <div className=" w-12 h-12 md:w-36 md:h-36  border-8 border-gray-300 border-t-green-600 rounded-full animate-spin"></div>
+          )}
         </div>
       )}
       <div
@@ -224,14 +255,14 @@ const Plansform = ({ planlist, pageheading, btnclass }) => {
       >
         <div
           style={{ backgroundImage: `url(${herobg})` }}
-          className=" 
-     bg-center md:bg-cover bg-contain 
-          w-full py-auto h-screen
-          md:px-2  p-10 flex  flex-col items-center justify-center"
+          className=" bg-center md:bg-cover bg-contain 
+              w-full py-auto h-screen
+              px-2  py-10 flex  flex-col items-center justify-center
+             "
         >
           <form
             onSubmit={handelsubmit}
-            className=" shadow-md shadow-black bg-gray-200 p-4 md:p-10 py-3 rounded-lg w-full  md:w-1/2 lg:w-1/3 "
+            className=" shadow-md shadow-black bg-gray-200  p-10 rounded-lg  w-full md:w-[30%] "
           >
             <h1 className="text-center pb-5 font-bold sm:text-lg md:text-3xl">
               {pageheading}

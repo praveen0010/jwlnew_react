@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <div className="fixed w-full  top-0  right-0">
-      <div className="md:px-10  h-22  md:h-32 gradientbg p-3  mx-auto flex justify-between  items-center ">
+    <div className="fixed w-full  top-0  right-0 gradientbg ">
+      <div className="    h-22  md:h-32  py-3  mx-auto flex justify-between  items-center  px-2">
         <div>
           <Link to={"/"}>
             <img

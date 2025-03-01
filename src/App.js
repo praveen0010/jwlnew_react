@@ -1,6 +1,6 @@
 import "./App.css";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Plansform from "./pages/Plansform";
 import Navbar from "./pages/Navbar";
 import Hero from "./pages/Hero";
@@ -14,9 +14,36 @@ function App() {
   const [isadmin, setisadmin] = useState(false);
   const navigate = useNavigate();
   const [loginerror, setloginerror] = useState("");
+  const [isloading, setisloading] = useState(false);
+
+  const [pricedata, setpricedata] = useState({
+    golden: "",
+    silver: "",
+    chittu: "",
+  });
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/prices/getPrices`)
+      .then((response) => {
+        const price = {
+          chittu: response?.data?.[0]?.chittu,
+          golden: response?.data?.[0]?.golden,
+          silver: response?.data?.[0]?.silver,
+        };
+        setpricedata(price);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+
+    return () => {
+      setpricedata({});
+    };
+  }, []);
 
   const handellogin = async (email, password) => {
     try {
+      setisloading(true);
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/admin/adminlogin`,
         {
@@ -25,14 +52,16 @@ function App() {
         }
       );
       if (response.status === 200) {
-        navigate("/Admindashboard"); // Redirect to admin panel
+        setisloading(false);
         setisadmin(true);
+        navigate("/Admindashboard"); // Redirect to admin panel
         return true;
       } else {
+        setisloading(false);
         setloginerror(response.message);
-        console.log(response.message);
       }
     } catch (err) {
+      setisloading(false);
       setloginerror(err?.message);
       setisadmin(false);
       return false;
@@ -78,11 +107,27 @@ function App() {
 
           <Route
             path="/Admin"
-            element={<Adminform onlogin={handellogin} loginerr={loginerror} />}
+            element={
+              <Adminform
+                onlogin={handellogin}
+                loginerr={loginerror}
+                isloading={isloading}
+                setisloading={setisloading}
+              />
+            }
           />
           <Route
             path="/Admindashboard"
-            element={isadmin ? <Admindashbord /> : <Navigate to="/Admin" />}
+            element={
+              isadmin ? (
+                <Admindashbord
+                  pricedata={pricedata}
+                  setpricedata={setpricedata}
+                />
+              ) : (
+                <Navigate to="/Admin" />
+              )
+            }
           />
           <Route path="*" element={<PageNotFound />} />
 

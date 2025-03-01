@@ -8,6 +8,7 @@ const Resetpassword = () => {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [isloading, setisloading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,6 +18,7 @@ const Resetpassword = () => {
       const errpass = validatePassword(password);
       let err = erremail + errpass;
       if (err) {
+        setisloading(true);
         const response = await axios.post(
           "https://asa-main.onrender.com/admin/restpassword",
           JSON.stringify({ email, password }),
@@ -27,15 +29,16 @@ const Resetpassword = () => {
           }
         );
 
-        setMessage(response?.data?.message);
-        console.log(response);
+        setisloading(false);
         if (response.status === 200) {
-          setTimeout(() => navigate("/Admin"), 2000); // Redirect to login after 2s
+          navigate("/Admin");
         }
       } else {
+        setisloading(false);
         setMessage("Invalid Password...");
       }
     } catch (error) {
+      setisloading(false);
       setMessage(error.message);
     }
   };
@@ -80,68 +83,74 @@ const Resetpassword = () => {
         className=" 
          bg-center md:bg-cover bg-contain 
               w-full py-auto h-screen
-              md:px-2  p-10 flex  flex-col items-center justify-center"
+              px-2  py-10 flex  flex-col items-center justify-center "
       >
-        <form
-          onSubmit={handleSubmit}
-          className=" shadow-md shadow-black bg-gray-200 p-5  rounded-lg md:w-1/4 w-full "
-        >
-          <h2 className="text-center pb-5 text-black font-semibold">
-            Reset Password
-          </h2>
-          <div className="mb-3 ">
-            <label htmlFor="NewPass" className=" block">
-              Email
-            </label>
-            <input
-              autoComplete="off"
-              className=" bg-transparent  rounded-sm p-2 w-full  outline-none 
+        {isloading ? (
+          <div className="flex items-center justify-center fixed top-0 bottom-0 left-0 right-0 bg-black bg-opacity-50">
+            <div className="w-12 h-12 md:w-36 md:h-36  border-8 border-gray-300 border-t-green-600 rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          <form
+            onSubmit={handleSubmit}
+            className=" shadow-md shadow-black bg-gray-200 p-10  rounded-lg md:w-[30%] w-full "
+          >
+            <h2 className="text-center pb-5 text-black font-semibold">
+              Reset Password
+            </h2>
+            <div className="mb-3 ">
+              <label htmlFor="NewPass" className=" block">
+                Email
+              </label>
+              <input
+                autoComplete="off"
+                className=" bg-transparent  rounded-sm p-2 w-full  outline-none 
               focus:border-2 focus:border-black focus:rounded-md   
               border-b-2 border-black  "
-              type="email"
-              id="email"
-              name="email"
-              onChange={handelchangeemail}
-              value={email}
-            />
-          </div>
+                type="email"
+                id="email"
+                name="email"
+                onChange={handelchangeemail}
+                value={email}
+              />
+            </div>
 
-          <div className="mb-3 ">
-            <label htmlFor="NewPass" className=" block">
-              New Password
-            </label>
-            <input
-              autoComplete="off"
-              className=" bg-transparent  rounded-sm p-2 w-full  outline-none focus:border-2 focus:border-black focus:rounded-md   border-b-2 border-black  "
-              type="text"
-              id="NewPass"
-              name="NewPass"
-              onChange={handelchangepass}
-              value={password}
-            />
-          </div>
+            <div className="mb-3 ">
+              <label htmlFor="NewPass" className=" block">
+                New Password
+              </label>
+              <input
+                autoComplete="off"
+                className=" bg-transparent  rounded-sm p-2 w-full  outline-none focus:border-2 focus:border-black focus:rounded-md   border-b-2 border-black  "
+                type="text"
+                id="NewPass"
+                name="NewPass"
+                onChange={handelchangepass}
+                value={password}
+              />
+            </div>
 
-          <div className="flex flex-col">
-            <button
-              className="cursor-pointer
+            <div className="flex flex-col">
+              <button
+                className="cursor-pointer
              mb-3 text-center  p-3  rounded text-white  font-bold"
-              style={{
-                background:
-                  "linear-gradient(90deg, #006537 0%, #01a056 50.5%, #006e39 100%)",
-              }}
-              type="submit"
-              onClick={handleSubmit}
-            >
-              Reset
-            </button>
-          </div>
+                style={{
+                  background:
+                    "linear-gradient(90deg, #006537 0%, #01a056 50.5%, #006e39 100%)",
+                }}
+                type="submit"
+                onClick={handleSubmit}
+              >
+                Reset
+              </button>
+            </div>
 
-          {message ? (
-            <p className="text-red-600 text-center animate-pulse delay-75">
-              {message}
-            </p>
-          ) : null}
-        </form>
+            {message ? (
+              <p className="text-red-600 text-center animate-pulse delay-75">
+                {message}
+              </p>
+            ) : null}
+          </form>
+        )}
       </div>
     </div>
   );
