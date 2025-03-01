@@ -5,8 +5,5 @@
   background: linear-gradient(90deg, #a47c00 0%, #f1b905 57.5%, #a47c00 100%);
 }
 .zindex {
-  z-index: 1500;
-}
-.width-80 {
-  width: 80%;
+  z-index: 25;
 }

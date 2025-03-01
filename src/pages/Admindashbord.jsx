@@ -438,15 +438,15 @@ const Admindashbord = ({ pricedata, setpricedata }) => {
                   ) : (
                     <tr>
                       <td
-                        colSpan="7"
-                        className="border p-4 text-center text-gray-500 h-[470px]"
+                        colSpan="8"
+                        className=" border p-4 text-center text-gray-500 h-[470px]"
                       >
                         {isloading ? (
                           <div className="alert-overlay z-20">
                             <div className=" w-12 h-12 md:w-36 md:h-36  border-8 border-gray-300 border-t-green-600 rounded-full animate-spin"></div>
                           </div>
                         ) : (
-                          <p className=" font-semibold text-xl animate-pulse ease-in delay-0 text-green-600">
+                          <p className="text-start px-20 md:px-0 md:text-center font-semibold text-xl animate-pulse ease-in delay-0 text-green-600">
                             No data available
                           </p>
                         )}
@@ -583,7 +583,7 @@ const Admindashbord = ({ pricedata, setpricedata }) => {
                 <button
                   onClick={submitprice}
                   className=" bg-gradient-to-r from-[#006537] via-[#01a056] to-[#006e39] hover:bg-gradient-to-r
-           hover:from-[#b28800] hover:via-[#d9a500] hover:to-[#ab8200]  p-3 rounded-md"
+           hover:from-[#b28800] hover:via-[#d9a500] hover:to-[#ab8200]  p-3 rounded-md outline-none border-none"
                 >
                   <span className="font-bold text-lg text-white">Save</span>
                 </button>

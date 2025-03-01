@@ -1,21 +1,23 @@
 import React from "react";
 import "./Navbar.css";
 import logo from "../Assets/images/logo.png";
-import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 const Navbar = () => {
+  const navigate = useNavigate();
+  function tohome() {
+    navigate("/");
+  }
   return (
     <div className="fixed w-full  top-0  right-0 gradientbg ">
       <div className="    h-22  md:h-32  py-3  mx-auto flex justify-between  items-center  px-2">
-        <div>
-          <Link to={"/"}>
-            <img
-              src={logo}
-              alt="logo"
-              className="h-22 w-24  md:w-44 md:h-full"
-            />
-          </Link>
+        <div onClick={tohome}>
+          <img
+            src={logo}
+            alt="logo"
+            className=" cursor-pointer h-22 w-24  md:w-44 md:h-full"
+          />
         </div>
+
         <div className="flex justify-center items-center gap-1 md:gap-2 bgvanmobile   rounded-lg p-2  md:px-5">
           <svg
             xmlns="http://www.w3.org/2000/svg"
