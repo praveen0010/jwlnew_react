@@ -1,46 +1,35 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import "./Admindashbord.css";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
 import moment from "moment";
+import { API } from "../../src/axios";
+import Setprice from "./Setprice";
 
-const Admindashbord = ({ pricedata, setpricedata }) => {
-  const navigate = useNavigate();
+const Admindashbord = () => {
   const [data, setdata] = useState([]);
   const [search, setsearch] = useState("");
   const [isloading, setisloading] = useState(false);
   const [isreport, setisreport] = useState(true);
   const [isfilter, setisfilter] = useState(false);
-  const [savemsg, setsavemsg] = useState("");
+  const [shouldFetch, setShouldFetch] = useState(true);
   const [filterdate, setfilterdate] = useState({
     fromdate: moment().format("YYYY-MM-DD"),
     todate: moment().format("YYYY-MM-DD"),
   });
 
-  const [priceerror, setpriceerror] = useState({
-    golden: "",
-    silver: "",
-    chittu: "",
-  });
-
-  const [shouldFetch, setShouldFetch] = useState(false); // Triggers API fetch
+  // Triggers API fetch
   useEffect(() => {
     if (!shouldFetch) return; // Prevents API call unless shouldFetch is true
-
     const fetchData = async () => {
       setisloading(true);
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/client/getclientfilters`,
-          {
-            params: {
-              fromDate: filterdate.fromdate.split("-").reverse().join("-"),
-              toDate: filterdate.todate.split("-").reverse().join("-"),
-            },
-          }
-        );
+        const response = await API.get(`/client/getclientfilters`, {
+          params: {
+            fromDate: filterdate.fromdate.split("-").reverse().join("-"),
+            toDate: filterdate.todate.split("-").reverse().join("-"),
+          },
+        });
         setdata(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -111,59 +100,6 @@ const Admindashbord = ({ pricedata, setpricedata }) => {
   function handelchangesearch(e) {
     setsearch(e.target.value);
   }
-  function submitprice(e) {
-    e.preventDefault();
-    var aller = "";
-    for (let key in pricedata) {
-      const err = isValidNumber(
-        key.split("price")[0].toLocaleUpperCase(),
-        pricedata[key]
-      );
-      aller += err;
-      setpriceerror((preverr) => ({
-        ...preverr,
-        [key]: err,
-      }));
-    }
-    if (aller === "") {
-      Saveprice();
-    }
-  }
-  async function Saveprice() {
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/prices/prices`,
-        JSON.stringify(pricedata),
-        {
-          headers: {
-            "Content-Type": "application/json", // Send data as raw JSON
-          },
-        }
-      );
-      if (response.status === 200) {
-        setsavemsg("Price Change Succefull");
-        setTimeout(() => {
-          setsavemsg("");
-        }, 2000);
-      } else {
-        setsavemsg("Price Change Not Chnage");
-      }
-    } catch (error) {
-      setsavemsg(error.message);
-    }
-  }
-  function handelpricechange(e) {
-    const { name, value, id } = e.target;
-    setpricedata((prevdata) => ({
-      ...prevdata,
-      [name]: value,
-    }));
-    const err = isValidNumber(id, value);
-    setpriceerror((preverr) => ({
-      ...preverr,
-      [name]: err,
-    }));
-  }
 
   function handeldatachange(e) {
     const { name, value } = e.target;
@@ -172,13 +108,7 @@ const Admindashbord = ({ pricedata, setpricedata }) => {
       [name]: value,
     }));
   }
-  function isValidNumber(type, strvalue) {
-    if (!isNaN(strvalue) && !isNaN(parseFloat(strvalue))) {
-      return "";
-    } else {
-      return `Invalid ${type.toLocaleUpperCase()} Price`;
-    }
-  }
+
   function showprice() {
     if (isreport) {
       setisreport(false);
@@ -199,7 +129,7 @@ const Admindashbord = ({ pricedata, setpricedata }) => {
       <div
         className="
           w-full  
-           flex    h-full pt-20 md:pt-32 relative  flex-col px-1 "
+           flex    h-full pt-20 md:pt-32 relative  flex-col px-1 bg-center md:bg-cover bg-contain"
       >
         <div className="flex-col md:flex-row flex justify-center md:justify-between gap-3 w-full  my-1  ">
           <div className="flex w-full  md:w-1/2">
@@ -251,7 +181,7 @@ const Admindashbord = ({ pricedata, setpricedata }) => {
                 viewBox="0 0 24 24"
                 strokeWidth="1.5"
                 stroke="currentColor"
-                class="size-6"
+                className="size-6"
               >
                 <path
                   strokeLinecap="round"
@@ -308,7 +238,7 @@ const Admindashbord = ({ pricedata, setpricedata }) => {
                 />
               </svg>
             </button>
-            <button
+            {/* <button
               onClick={() => navigate("/")}
               className=" bg-gradient-to-r from-[#006537] via-[#01a056] to-[#006e39] hover:bg-gradient-to-r 
            hover:from-[#b28800] hover:via-[#d9a500] hover:to-[#ab8200] 
@@ -331,7 +261,7 @@ const Admindashbord = ({ pricedata, setpricedata }) => {
                   d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3"
                 />
               </svg>
-            </button>
+            </button> */}
           </div>
         </div>
         {isreport ? (
@@ -467,129 +397,13 @@ const Admindashbord = ({ pricedata, setpricedata }) => {
                     className="   pt-2 pb-2 px-3   text-left font-semibold left-10"
                   >
                     Total : {data.length}
-                    {/* <div className="flex  items-center justify-center">
-                      <button
-                        onClick={() => setpage(1)}
-                        className="bg-white px-4 mr-1 rounded cursor-pointer"
-                      >
-                        <p>Start</p>
-                      </button>
-                      <button
-                        onClick={() => setpage(page - 1)}
-                        disabled={page === 1}
-                        className="bg-white px-4 mr-1 rounded cursor-pointer"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="size-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5"
-                          />
-                        </svg>
-                      </button>
-
-                      <button className="bg-white px-4 mr-1 rounded ">
-                        <p>{page ? page : "  "}</p>
-                      </button>
-                      <button
-                        onClick={() => setpage(page + 1)}
-                        disabled={data.length === 0}
-                        className="bg-white px-4 mr-1 rounded cursor-pointer"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="size-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5"
-                          />
-                        </svg>
-                      </button>
-                    </div> */}
                   </td>
                 </tr>
               </tfoot>
             </table>
           </>
         ) : (
-          <div
-            className="
- w-full mx-auto overflow-auto  border rounded-md  h-full relative  flex items-center justify-center"
-          >
-            <form className="shadow-md shadow-black   p-2 md:p-10 rounded-lg  w-full md:w-[30%] ">
-              <div className="p-3  flex  flex-col w-full ">
-                <label htmlFor="goldprice" className="font-semibold mb-2">
-                  Gold Price
-                </label>
-                <input
-                  className="p-2   rounded-md border-2 border-green-500 outline-none "
-                  type="text"
-                  onChange={handelpricechange}
-                  value={pricedata.golden}
-                  name="golden"
-                  id="Gold"
-                />
-
-                <p className="text-sm text-red-600 ">{priceerror.golden}</p>
-              </div>
-              <div className="p-2  flex  flex-col w-full ">
-                <label htmlFor="goldprice" className="font-semibold mb-2">
-                  Sliver Price
-                </label>
-                <input
-                  type="text"
-                  value={pricedata.silver}
-                  onChange={handelpricechange}
-                  name="silver"
-                  id="Silver"
-                  className="p-2   rounded-md border-2 border-green-500 outline-none "
-                />
-                <p className="text-sm text-red-600 ">{priceerror.silver}</p>
-              </div>
-              <div className="p-3  flex  flex-col w-full ">
-                <label htmlFor="goldprice" className="font-semibold mb-2">
-                  Chit Amount
-                </label>
-                <input
-                  value={pricedata.chittu}
-                  type="text"
-                  onChange={handelpricechange}
-                  name="chittu"
-                  id="Chit"
-                  className="p-2   rounded-md border-2 border-green-500 outline-none "
-                />
-
-                <p className="text-sm text-red-600 ">{priceerror.chittu}</p>
-              </div>
-              {savemsg && (
-                <p className=" text-red-600 text-center animate-pulse duration-75">
-                  {savemsg}
-                </p>
-              )}
-              <div className="p-3  flex gap-3 flex-col w-full ">
-                <button
-                  onClick={submitprice}
-                  className=" bg-gradient-to-r from-[#006537] via-[#01a056] to-[#006e39] hover:bg-gradient-to-r
-           hover:from-[#b28800] hover:via-[#d9a500] hover:to-[#ab8200]  p-3 rounded-md outline-none border-none"
-                >
-                  <span className="font-bold text-lg text-white">Save</span>
-                </button>
-              </div>
-            </form>
-          </div>
+          <Setprice />
         )}
       </div>
     </>

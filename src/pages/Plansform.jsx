@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import herobg from "../Assets/images/herobg.png";
 import "./Planform.css";
 import axios from "axios";
+import { AuthContext } from "../Context/Context";
+import { API } from "../axios";
 
 const Plansform = ({ planlist, pageheading, btnclass }) => {
+  const { authuser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
   const [paymentstatus, setpaymentstatus] = useState("");
@@ -25,9 +28,9 @@ const Plansform = ({ planlist, pageheading, btnclass }) => {
     select_type: "",
     schemes: "",
     paymentId: "",
-    paymentStatus: "",
   });
   const [formData, setFormData] = useState({
+    userid: "",
     name: "",
     amount: "",
     email: "",
@@ -35,13 +38,11 @@ const Plansform = ({ planlist, pageheading, btnclass }) => {
     select_type: pageheading,
     schemes: "",
     paymentId: "",
-    paymentStatus: "",
   });
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_BASE_URL}/prices/getPrices`)
       .then((response) => {
-        
         const price = {
           chittu: response?.data?.[0]?.chittu,
           golden: response?.data?.[0]?.golden,
@@ -145,11 +146,13 @@ const Plansform = ({ planlist, pageheading, btnclass }) => {
           const razorpay_payment_id = response.razorpay_payment_id;
           if (razorpay_payment_id) {
             setIsVisible(true);
-            const paymentDetails = await verifyPayment(razorpay_payment_id);
-            
-            if (paymentDetails) {
-              savetodb(razorpay_payment_id, paymentDetails);
-            }
+            //const paymentDetails = await verifyPayment(razorpay_payment_id);
+
+            //if (paymentDetails) {
+            //savetodb(razorpay_payment_id, paymentDetails);
+            savetodb(razorpay_payment_id);
+
+            //}
           }
         },
         prefill: {
@@ -170,39 +173,44 @@ const Plansform = ({ planlist, pageheading, btnclass }) => {
     }
   }
 
-  const verifyPayment = async (razorpay_payment_id) => {
-    try {
-      setIsVisible(true);
-      const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/payment/getPaymentDetails`,
-        {
-          razorpay_payment_id: razorpay_payment_id,
-        }
-      );
-      if (response?.data?.payment?.status) {
-        return response?.data?.payment?.status;
-      }
-    } catch (error) {
-      setIsVisible(false);
-      console.error("Payment verification error:", error);
-    }
-  };
-  const savetodb = async (paymentid, paymentstatus) => {
+  // const verifyPayment = async (razorpay_payment_id) => {
+  //   try {
+  //     setIsVisible(true);
+  //     const response = await axios.post(
+  //       `${process.env.REACT_APP_BASE_URL}/payment/getPaymentDetails`,
+  //       {
+  //         razorpay_payment_id: razorpay_payment_id,
+  //       }
+  //     );
+  //     if (response?.data?.payment?.status) {
+  //       return response?.data?.payment?.status;
+  //     }
+  //   } catch (error) {
+  //     setIsVisible(false);
+  //     console.error("Payment verification error:", error);
+  //   }
+  // };
+  const savetodb = async (paymentid) => {
     try {
       setIsVisible(true);
       formData.paymentId = paymentid;
-      formData.paymentStatus = paymentstatus;
-
-      const response = await axios.post(
+      formData.userid = authuser.userid;
+      
+      const response = await API.post(
         //"https://asa-main.onrender.com/client/client",
-        `${process.env.REACT_APP_BASE_URL}/client/client`,
-        JSON.stringify(formData),
+        `/client/client`,
+        JSON.stringify({
+          formData,
+          //   razorpay_payment_id: paymentid,
+          //   userid: authuser.userid,
+        }),
         {
           headers: {
             "Content-Type": "application/json", // Send data as raw JSON
           },
         }
       );
+      console.log(response);
 
       if (response.status === 200) {
         setpaymentstatus("Payment Succefull");

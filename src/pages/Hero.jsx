@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Hero.css";
 import { Link } from "react-router-dom";
 import herobg from "../Assets/images/herobg.png";
 import Herogirl from "../Assets/images/Herogirl.png";
 import Footer from "./Footer";
+import { AuthContext } from "../Context/Context.js";
+
 const Hero = () => {
+  const { authuser } = useContext(AuthContext);
+  console.log(authuser);
   return (
     <>
       <div className="md:pt-32 pt-16 bg-green-300 ">
@@ -37,26 +41,7 @@ const Hero = () => {
               <h4 className="text-center text-white text-xl sm:text-xl  font-bold">
                 CLICK HERE TO ENTER FOR MONTHLY PAY
               </h4>
-              <div className="flex flex-col md:flex-row justify-between  w-full  p-3  rounded-sm gap-5 ">
-                <Link
-                  to="/Home/Goldform"
-                  className="bggoldbtn px-8 p-2 font-semibold text-black rounded-md text-center md:px-10"
-                >
-                  GOLD COIN
-                </Link>
-                <Link
-                  to="/Home/Silverform"
-                  className="bgsilverbtn px-8 p-2 font-semibold text-black rounded-md text-center md:px-10"
-                >
-                  SILVER
-                </Link>
-                <Link
-                  to="/Home/Chitform "
-                  className="bgchitbtn px-8 p-2 font-semibold text-white rounded-md text-center md:px-10"
-                >
-                  CHIT FUND
-                </Link>
-              </div>
+              {Boolean(authuser.user) ? <Forms /> : <Loginsignup />}
             </div>
           </div>
         </div>
@@ -67,3 +52,47 @@ const Hero = () => {
 };
 
 export default Hero;
+
+const Forms = () => {
+  return (
+    <div className="flex flex-col md:flex-row justify-between  w-full  p-3  rounded-sm gap-5 ">
+      <Link
+        to="/Home/Goldform"
+        className="bggoldbtn px-8 p-2 font-semibold text-black rounded-md text-center md:px-10"
+      >
+        GOLD COIN
+      </Link>
+      <Link
+        to="/Home/Silverform"
+        className="bgsilverbtn px-8 p-2 font-semibold text-black rounded-md text-center md:px-10"
+      >
+        SILVER
+      </Link>
+      <Link
+        to="/Home/Chitform "
+        className="bgchitbtn px-8 p-2 font-semibold text-white rounded-md text-center md:px-10"
+      >
+        CHIT FUND
+      </Link>
+    </div>
+  );
+};
+
+const Loginsignup = () => {
+  return (
+    <div className="flex flex-col justify-evenly md:flex-row   w-full rounded-sm gap-5 ">
+      <Link
+        to="/SignUp"
+        className=" w-1/3 bggoldbtn p-2 font-semibold text-black rounded-md text-center md:px-10"
+      >
+        SignUp
+      </Link>
+      <Link
+        to="/Login"
+        className="w-1/3 bgsilverbtn  p-2 font-semibold text-black rounded-md text-center md:px-10"
+      >
+        Login
+      </Link>
+    </div>
+  );
+};

@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer
       className=" flex-col 
-    justify-between bg-white wisth80 "
+    justify-between bg-white  "
     >
       <div className="  flex justify-between flex-col   w-full  h-full md:pt-8  px-8 pt-5 pb-1 gap-5 ">
         <div className="  flex-col sm:gap-2 md:gap-5 gap-5 md:flex-row flex w-full justify-between md:p-10  ">
