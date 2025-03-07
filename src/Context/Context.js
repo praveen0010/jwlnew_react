@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }) => {
           userid: result?.data?.user?._id,
           error: "",
         });
-        console.log(authuser);
+        //console.log(authuser);
         if (result?.data?.user?.role === "admin") {
           return "admin";
         } else {

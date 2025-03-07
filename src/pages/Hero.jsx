@@ -8,7 +8,7 @@ import { AuthContext } from "../Context/Context.js";
 
 const Hero = () => {
   const { authuser } = useContext(AuthContext);
-  console.log(authuser);
+  //console.log(authuser);
   return (
     <>
       <div className="md:pt-32 pt-16 bg-green-300 ">
@@ -80,16 +80,16 @@ const Forms = () => {
 
 const Loginsignup = () => {
   return (
-    <div className="flex flex-col justify-evenly md:flex-row   w-full rounded-sm gap-5 ">
+    <div className="flex flex-col justify-between md:justify-evenly md:flex-row   w-full rounded-sm gap-5 ">
       <Link
         to="/SignUp"
-        className=" w-1/3 bggoldbtn p-2 font-semibold text-black rounded-md text-center md:px-10"
+        className=" w-full md:w-1/3 bggoldbtn p-2 font-semibold text-black rounded-md text-center md:px-10"
       >
         SignUp
       </Link>
       <Link
         to="/Login"
-        className="w-1/3 bgsilverbtn  p-2 font-semibold text-black rounded-md text-center md:px-10"
+        className="w-full md:w-1/3 bgsilverbtn  p-2 font-semibold text-black rounded-md text-center md:px-10"
       >
         Login
       </Link>
