@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
         { email, password },
         { withCredentials: true }
       );
-
+      console.log(result);
       setloginloading(false);
       if (result.data.success) {
         setauthUser({
@@ -97,7 +97,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ authuser, Login, Logout ,loginloading}}>
+    <AuthContext.Provider value={{ authuser, Login, Logout, loginloading }}>
       {children}
     </AuthContext.Provider>
   );
